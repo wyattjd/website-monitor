@@ -1,8 +1,9 @@
 node{
-	website = getCMDResults("curl -XGET url");
+	website = "";
+	resp = getCMDResults("curl ${website}");
 
-	if(!website.contains("term")){
-		sh "curl webhook"
+	if(!resp.contains("out of stock")){
+		sh "curl -H 'Content-Type: application/json' -d '{\"content\":\"In Stock: ${website}\"}' webhookUrl"
 	}
 }
 
